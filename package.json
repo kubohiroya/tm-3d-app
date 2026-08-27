@@ -50,7 +50,7 @@
     "sb3:check": "node scripts/sb3/release-workflow.mjs check",
     "release:sb3:update": "node scripts/sb3/release-workflow.mjs update",
     "release:sb3:check": "node scripts/sb3/release-workflow.mjs check",
-    "check": "pnpm run typecheck && pnpm run test"
+    "check": "pnpm run typecheck && pnpm run test && pnpm run sb3:check"
   },
   "dependencies": {
     "yaml": "^2.9.0"
