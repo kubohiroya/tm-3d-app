@@ -8,6 +8,15 @@ importers:
 
   .:
     dependencies:
+      '@kubohiroya/turbowarp-ar':
+        specifier: 0.1.0
+        version: 0.1.0
+      '@kubohiroya/turbowarp-sb3-app-source':
+        specifier: 0.1.0
+        version: 0.1.0
+      '@kubohiroya/turbowarp-scene-graph-plan':
+        specifier: 0.1.0
+        version: 0.1.0
       yaml:
         specifier: ^2.9.0
         version: 2.9.0
@@ -37,6 +46,18 @@ packages:
     resolution: {integrity: sha512-aB83bUhBvXU5/hYH74uiAgRI80hA/3/ZugDTUHl2YP0bajR8GctKRqz9+rtGDYlr4U+3pbkHxgGUbnMBgLAQQA==}
     engines: {node: '>=22.12.0'}
     hasBin: true
+
+  '@kubohiroya/turbowarp-ar@0.1.0':
+    resolution: {integrity: sha512-FQmmkvJpp77UtcbfOur31yNxVVdwA9nCmkcKZ9N4rNwGZgQHxmZTZfBqp2zOzA5xePwuvIn5fQpyxwZ1GZTQkw==}
+    engines: {node: '>=22'}
+
+  '@kubohiroya/turbowarp-sb3-app-source@0.1.0':
+    resolution: {integrity: sha512-lV0WrdyxFpUPYvusxTcCRt/XXtgBPi28JdYfbLjkqCI/5W3yl+DcxnHNzMtvPCH/TW1l9iuRP4Li9KyQRIywcg==}
+    engines: {node: '>=22'}
+
+  '@kubohiroya/turbowarp-scene-graph-plan@0.1.0':
+    resolution: {integrity: sha512-KvmRHfrXu4VsqK77E8wENZJJEd7kiZqjjcykZp2YZP31ownHoykz1nBYajfjIsAJoCp3DfgsUzII6pEQetKouw==}
+    engines: {node: '>=22'}
 
   '@oxc-project/types@0.146.0':
     resolution: {integrity: sha512-XC0QsnnhVe7sLIWmYmdPw7x5P0h4W8vUU3Nv1ySgWXtvCz8NizoAEpGXA0sOYoJQV2Rl13LgURAHQ5cI5ILCSA==}
@@ -527,6 +548,12 @@ snapshots:
       yaml: 2.9.0
     transitivePeerDependencies:
       - supports-color
+
+  '@kubohiroya/turbowarp-ar@0.1.0': {}
+
+  '@kubohiroya/turbowarp-sb3-app-source@0.1.0': {}
+
+  '@kubohiroya/turbowarp-scene-graph-plan@0.1.0': {}
 
   '@oxc-project/types@0.146.0': {}
 

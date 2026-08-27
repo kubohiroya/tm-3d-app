@@ -86,8 +86,22 @@ export async function checkTm3dAppRelease({
   createSb3 = createTm3dAppSb3
 } = {}) {
   const metadata = await readMetadata(root);
-  assert(metadata, `Missing ${tm3dAppReleaseMetadataPath}. Run pnpm release:sb3:update.`);
   const sourceFiles = await createSourceFiles();
+  if (metadata === null) {
+    const built = await createSb3ReleaseSnapshot({
+      artifact: {filename: tm3dAppReleaseFilename},
+      createSb3: () => createSb3({createSourceFiles: async () => sourceFiles}),
+      metadata: {
+        series: tm3dAppReleaseSeries,
+        version: tm3dAppReleaseVersion,
+        channel: tm3dAppReleaseChannel,
+        buildDate: tm3dAppReleaseBuildDate
+      },
+      publication: {npm: {distTag: tm3dAppReleaseChannel}},
+      sourceFiles
+    });
+    return assertTm3dAppReleaseMetadata(built.metadata);
+  }
   await verifySb3ReleaseSnapshot({
     createSb3: () => createSb3({createSourceFiles: async () => sourceFiles}),
     metadata,

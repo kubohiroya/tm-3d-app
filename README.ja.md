@@ -29,6 +29,7 @@ import {
   normalizeKamishibai3DSceneExtension,
   normalizeSceneDocument,
   parseSceneYaml,
+  stringifySceneGraphValue,
   stringifySceneYaml,
   validateKamishibai3DSceneExtension,
   validateSceneDocument,
@@ -41,6 +42,7 @@ import {
 - `SceneDocument`
 - `NormalizedSceneDocument`
 - `SceneNodeTemplate`
+- `SceneGraphValue`
 - `Kamishibai3DSceneExtension`
 - `NormalizedKamishibai3DSceneExtension`
 - `TurboWarpExtensionCall`
@@ -89,6 +91,13 @@ console.log(stringifySceneYaml(scene));
 - id がない子 node には `scene-box-1` のような決定的 id が付く。
 - id は空白を trim し、英数字・`_`・`-` 以外を `-` に置き換える。
 - 正規化後に重複 id がある場合は例外を投げる。
+
+`data` と `attributes` の値には、文字列、数値、真偽値、`null`、scalar 配列、scalar object を指定できます。呼び出し計画の生成時には `stringifySceneGraphValue` で TurboWarp 向けの文字列へ変換します。
+
+- scalar は JavaScript の文字列変換を使う。ただし `null` は空文字列になる。
+- 配列は scalar 文字列をスペース区切りで連結する。
+- `x` / `y` / `z` / `w` だけを持つ vector 風 object は、その順序でスペース区切りにする。
+- その他の scalar object は key 順に並べ、`key: value; key: value` の形にする。
 
 ## Kamishibai 3D Scene Extension
 
@@ -142,7 +151,7 @@ pnpm run build
 pnpm run check
 ```
 
-`pnpm run check` は `typecheck` と `test` を順に実行します。
+`pnpm run check` は `typecheck`、`test`、`sb3:check` を順に実行します。
 
 ## ライセンス
 
