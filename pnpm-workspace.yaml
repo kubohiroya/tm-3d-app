@@ -3,3 +3,5 @@ packages:
 
 minimumReleaseAgeExclude:
   - '@kubohiroya/sb3-toolchain@0.10.0'
+  - '@kubohiroya/turbowarp-sb3-app-source@0.1.0'
+  - '@kubohiroya/turbowarp-scene-graph-plan@0.1.0'

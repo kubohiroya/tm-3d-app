@@ -29,6 +29,7 @@ import {
   normalizeKamishibai3DSceneExtension,
   normalizeSceneDocument,
   parseSceneYaml,
+  stringifySceneGraphValue,
   stringifySceneYaml,
   validateKamishibai3DSceneExtension,
   validateSceneDocument,
@@ -41,6 +42,7 @@ Main types:
 - `SceneDocument`
 - `NormalizedSceneDocument`
 - `SceneNodeTemplate`
+- `SceneGraphValue`
 - `Kamishibai3DSceneExtension`
 - `NormalizedKamishibai3DSceneExtension`
 - `TurboWarpExtensionCall`
@@ -89,6 +91,13 @@ Main normalization rules:
 - Child nodes without ids receive deterministic ids such as `scene-box-1`.
 - ids are trimmed, and characters other than ASCII letters, digits, `_`, and `-` are replaced with `-`.
 - Duplicate ids after normalization throw an error.
+
+`data` and `attributes` values may be strings, numbers, booleans, `null`, scalar arrays, or scalar objects. Call planning converts them to TurboWarp strings with `stringifySceneGraphValue`:
+
+- Scalars use JavaScript string conversion, except `null` becomes an empty string.
+- Arrays become space-separated scalar strings.
+- Vector-like objects with `x` / `y` / `z` / `w` keys use that order and become space-separated scalar strings.
+- Other scalar objects are sorted by key and rendered as `key: value; key: value`.
 
 ## Kamishibai 3D Scene Extension
 
@@ -142,7 +151,7 @@ pnpm run build
 pnpm run check
 ```
 
-`pnpm run check` runs `typecheck` and `test` in sequence.
+`pnpm run check` runs `typecheck`, `test`, and `sb3:check` in sequence.
 
 ## License
 

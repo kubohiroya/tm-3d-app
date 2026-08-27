@@ -4,6 +4,7 @@ import {
   normalizeKamishibai3DSceneExtension,
   normalizeSceneDocument,
   parseSceneYaml,
+  stringifySceneGraphValue,
   stringifySceneYaml
 } from '../src/index.js';
 
@@ -180,5 +181,51 @@ describe('scene YAML documents', () => {
         args: {SELECTOR: '#card', TARGET_ID: 'marker-1'}
       }
     ]);
+  });
+
+  it('serializes typed scene graph values for TurboWarp call arguments', () => {
+    const calls = createTurboWarpExtensionPlan({
+      scene3d: {
+        formatVersion: 1,
+        root: {
+          children: [
+            {
+              type: 'box',
+              id: 'card',
+              data: {
+                score: 12,
+                flags: {selected: true, visible: false}
+              },
+              attributes: {
+                position: {x: 0, y: 1, z: -3},
+                color: ['red', 'green', 'blue']
+              }
+            }
+          ]
+        }
+      }
+    });
+
+    expect(calls).toContainEqual({
+      extension: 'turbowarp-aframe',
+      opcode: 'setData',
+      args: {SELECTOR: '#card', KEY: 'score', VALUE: '12'}
+    });
+    expect(calls).toContainEqual({
+      extension: 'turbowarp-aframe',
+      opcode: 'setData',
+      args: {SELECTOR: '#card', KEY: 'flags', VALUE: 'selected: true; visible: false'}
+    });
+    expect(calls).toContainEqual({
+      extension: 'turbowarp-aframe',
+      opcode: 'setAttribute',
+      args: {SELECTOR: '#card', NAME: 'position', VALUE: '0 1 -3'}
+    });
+    expect(calls).toContainEqual({
+      extension: 'turbowarp-aframe',
+      opcode: 'setAttribute',
+      args: {SELECTOR: '#card', NAME: 'color', VALUE: 'red green blue'}
+    });
+    expect(stringifySceneGraphValue({z: -3, x: 0, y: 1})).toBe('0 1 -3');
   });
 });
