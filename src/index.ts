@@ -12,25 +12,30 @@ import {
   type SceneGraphScalar,
   type SceneGraphValue
 } from '@kubohiroya/turbowarp-scene-graph-plan';
+import {
+  createTurboWarpARScenePlan,
+  normalizeARSceneControl,
+  validateARSceneControl,
+  type ARSceneControl,
+  type ARTargetBinding,
+  type NormalizedARSceneControl,
+  type TurboWarpARScenePlanCall
+} from '@kubohiroya/turbowarp-ar/plan';
 import {parse as parseYaml, stringify as stringifyYaml} from 'yaml';
 
 export type SceneOptions = SceneGraphOptions;
 export type SceneNodeTemplate = SceneGraphNode;
 export type SceneDocument = SceneGraphDocument;
 export type NormalizedSceneDocument = NormalizedSceneGraphDocument;
-export type {AFrameSceneGraphCall, SceneGraphScalar, SceneGraphValue};
+export type {
+  AFrameSceneGraphCall,
+  ARSceneControl,
+  ARTargetBinding,
+  SceneGraphScalar,
+  SceneGraphValue,
+  TurboWarpARScenePlanCall
+};
 export {stringifySceneGraphValue};
-
-export interface ARTargetBinding {
-  targetId: string;
-  selector: string;
-}
-
-export interface ARSceneControl {
-  cameraId?: string;
-  layer?: string;
-  targets?: ARTargetBinding[];
-}
 
 export interface Kamishibai3DSceneExtension {
   scene3d?: SceneDocument;
@@ -39,32 +44,10 @@ export interface Kamishibai3DSceneExtension {
 
 export interface NormalizedKamishibai3DSceneExtension {
   scene3d?: NormalizedSceneDocument;
-  ar?: {
-    cameraId: string;
-    layer: string;
-    targets: ARTargetBinding[];
-  };
+  ar?: NormalizedARSceneControl;
 }
 
-export type TurboWarpExtensionCall =
-  | AFrameSceneGraphCall
-  | {
-      extension: 'turbowarp-ar';
-      opcode: 'createARScene';
-      args: {CAMERA_ID: string; LAYER: string};
-    }
-  | {
-      extension: 'turbowarp-ar';
-      opcode: 'defineARTarget';
-      args: {TARGET_ID: string};
-    }
-  | {
-      extension: 'turbowarp-ar';
-      opcode: 'attachSelectorToARTarget';
-      args: {SELECTOR: string; TARGET_ID: string};
-    };
-
-const DEFAULT_AR_LAYER = 'camera-under-3d';
+export type TurboWarpExtensionCall = AFrameSceneGraphCall | TurboWarpARScenePlanCall;
 
 export function parseSceneYaml(source: string): NormalizedSceneDocument {
   const value: unknown = parseYaml(source);
@@ -86,11 +69,7 @@ export function normalizeKamishibai3DSceneExtension(
     normalized.scene3d = normalizeSceneDocument(extension.scene3d);
   }
   if (extension.ar !== undefined) {
-    normalized.ar = {
-      cameraId: normalizeId(extension.ar.cameraId ?? 'default') || 'default',
-      layer: extension.ar.layer ?? DEFAULT_AR_LAYER,
-      targets: [...(extension.ar.targets ?? [])]
-    };
+    normalized.ar = normalizeARSceneControl(extension.ar);
   }
   return normalized;
 }
@@ -106,26 +85,7 @@ export function createTurboWarpExtensionPlan(
   }
 
   if (normalized.ar !== undefined) {
-    calls.push({
-      extension: 'turbowarp-ar',
-      opcode: 'createARScene',
-      args: {
-        CAMERA_ID: normalized.ar.cameraId,
-        LAYER: normalized.ar.layer
-      }
-    });
-    for (const target of normalized.ar.targets) {
-      calls.push({
-        extension: 'turbowarp-ar',
-        opcode: 'defineARTarget',
-        args: {TARGET_ID: target.targetId}
-      });
-      calls.push({
-        extension: 'turbowarp-ar',
-        opcode: 'attachSelectorToARTarget',
-        args: {SELECTOR: target.selector, TARGET_ID: target.targetId}
-      });
-    }
+    calls.push(...createTurboWarpARScenePlan(normalized.ar));
   }
 
   return calls;
@@ -174,57 +134,12 @@ export function validateKamishibai3DSceneExtension(
     validateSceneDocument(extension['scene3d']);
   }
   if (extension['ar'] !== undefined) {
-    validateARSceneControl(extension['ar']);
-  }
-}
-
-function validateARSceneControl(value: unknown): void {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) {
-    throw new TypeError('Kamishibai 3D AR control must be an object.');
-  }
-  const control = value as Record<string, unknown>;
-  for (const key of Object.keys(control)) {
-    if (key !== 'cameraId' && key !== 'layer' && key !== 'targets') {
-      throw new TypeError(`Kamishibai 3D AR control ${key} is not supported.`);
+    try {
+      validateARSceneControl(extension['ar']);
+    } catch (error) {
+      throw remapTurboWarpARError(error);
     }
   }
-  validateOptionalString(control['cameraId'], 'ar.cameraId');
-  validateOptionalString(control['layer'], 'ar.layer');
-  const targets = control['targets'];
-  if (targets === undefined) return;
-  if (!Array.isArray(targets)) {
-    throw new TypeError('Kamishibai 3D AR control targets must be an array.');
-  }
-  targets.forEach((target, index) => {
-    validateARTargetBinding(target, `ar.targets[${index}]`);
-  });
-}
-
-function validateARTargetBinding(value: unknown, path: string): void {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) {
-    throw new TypeError(`Kamishibai 3D ${path} must be an object.`);
-  }
-  const target = value as Record<string, unknown>;
-  for (const key of Object.keys(target)) {
-    if (key !== 'targetId' && key !== 'selector') {
-      throw new TypeError(`Kamishibai 3D ${path}.${key} is not supported.`);
-    }
-  }
-  if (typeof target['targetId'] !== 'string' || target['targetId'].trim().length === 0) {
-    throw new TypeError(`Kamishibai 3D ${path}.targetId must be a non-empty string.`);
-  }
-  if (typeof target['selector'] !== 'string' || target['selector'].trim().length === 0) {
-    throw new TypeError(`Kamishibai 3D ${path}.selector must be a non-empty string.`);
-  }
-}
-
-function validateOptionalString(value: unknown, path: string): void {
-  if (value === undefined || typeof value === 'string') return;
-  throw new TypeError(`3D scene ${path} must be a string.`);
-}
-
-function normalizeId(value: string): string {
-  return value.trim().replace(/[^a-zA-Z0-9_-]/g, '-');
 }
 
 function remapSceneGraphError(error: unknown): unknown {
@@ -236,5 +151,13 @@ function remapSceneGraphError(error: unknown): unknown {
     .replace(/^Scene graph /u, '3D scene ')
     .replace(/^Duplicate scene graph node id:/u, 'Duplicate 3D scene node id:')
     .replace(/^Normalized scene graph nodes must/u, 'Normalized 3D scene nodes must');
+  return new (error.constructor as new (message: string) => Error)(nextMessage);
+}
+
+function remapTurboWarpARError(error: unknown): unknown {
+  if (!(error instanceof Error)) return error;
+  const nextMessage = error.message
+    .replace(/^TurboWarp AR scene control/u, 'Kamishibai 3D AR control')
+    .replace(/^TurboWarp AR /u, 'Kamishibai 3D ');
   return new (error.constructor as new (message: string) => Error)(nextMessage);
 }

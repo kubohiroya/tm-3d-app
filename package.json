@@ -53,6 +53,7 @@
     "check": "pnpm run typecheck && pnpm run test && pnpm run sb3:check"
   },
   "dependencies": {
+    "@kubohiroya/turbowarp-ar": "0.1.0",
     "@kubohiroya/turbowarp-sb3-app-source": "0.1.0",
     "@kubohiroya/turbowarp-scene-graph-plan": "0.1.0",
     "yaml": "^2.9.0"
