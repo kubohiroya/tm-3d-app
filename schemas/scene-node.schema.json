@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/kubohiroya/tm-3d-app/main/schemas/scene-node.schema.json",
+  "title": "tm-3d-app Scene Node",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "type": {"type": "string", "minLength": 1},
+    "id": {"type": "string", "minLength": 1},
+    "class": {
+      "oneOf": [
+        {"type": "string"},
+        {
+          "type": "array",
+          "items": {"type": "string"},
+          "uniqueItems": true
+        }
+      ]
+    },
+    "classes": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    },
+    "data": {
+      "type": "object",
+      "propertyNames": {"type": "string", "minLength": 1},
+      "additionalProperties": {"type": ["string", "number", "boolean", "null"]}
+    },
+    "attributes": {
+      "type": "object",
+      "propertyNames": {"type": "string", "minLength": 1},
+      "additionalProperties": {"type": ["string", "number", "boolean", "null"]}
+    },
+    "children": {
+      "type": "array",
+      "items": {"$ref": "#"}
+    }
+  }
+}

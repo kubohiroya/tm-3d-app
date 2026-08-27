@@ -1,0 +1,48 @@
+{
+  "name": "@kubohiroya/tm-3d-app",
+  "version": "0.1.0",
+  "description": "App-level 3D scene document utilities for tm packages.",
+  "author": "Hiroya Kubo <hiroya@cuc.ac.jp>",
+  "license": "MPL-2.0",
+  "homepage": "https://github.com/kubohiroya/tm-3d-app#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kubohiroya/tm-3d-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kubohiroya/tm-3d-app/issues"
+  },
+  "keywords": [
+    "3d",
+    "scene-graph",
+    "yaml",
+    "tm",
+    "typescript"
+  ],
+  "type": "module",
+  "files": [
+    "dist/",
+    "docs/",
+    "schemas/",
+    "src/",
+    "README.md"
+  ],
+  "packageManager": "pnpm@11.11.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run tests",
+    "build": "tsc --project tsconfig.build.json",
+    "check": "pnpm run typecheck && pnpm run test"
+  },
+  "dependencies": {
+    "yaml": "^2.9.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.10"
+  }
+}
