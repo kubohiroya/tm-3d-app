@@ -143,3 +143,7 @@ pnpm run check
 ```
 
 `pnpm run check` は `typecheck` と `test` を順に実行します。
+
+## ライセンス
+
+このプロジェクトは Mozilla Public License 2.0 の下で提供されます。詳細は [LICENSE](LICENSE) を参照してください。
