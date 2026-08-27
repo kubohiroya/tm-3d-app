@@ -34,6 +34,7 @@
     "schemas/",
     "scripts/",
     "src/",
+    "LICENSE",
     "README.md",
     "README.ja.md"
   ],
