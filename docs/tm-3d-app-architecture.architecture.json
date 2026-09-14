@@ -1,0 +1,935 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "tm-3d-app 詳細アーキテクチャ",
+    "output": "tm-3d-app-architecture.html",
+    "quality_profile": "standard",
+    "repository": {
+      "url": "https://github.com/kubohiroya/tm-3d-app",
+      "revision": "7427194c8b9a9981b7b9e85d253299f4a0064948"
+    },
+    "viewBox": [
+      1320,
+      650
+    ],
+    "views": [
+      {
+        "id": "yaml-path",
+        "label": "YAML path",
+        "focus": [
+          "consumer",
+          "packageExport",
+          "parseSceneYaml",
+          "yamlLibrary",
+          "validateSceneDocument",
+          "normalizeSceneDocument",
+          "stringifySceneYaml"
+        ],
+        "note": "YAML文字列は parse -> validate -> normalize を通り、stringify 時も検証後に正規化される。"
+      },
+      {
+        "id": "extension-path",
+        "label": "Extension path",
+        "focus": [
+          "consumer",
+          "normalizeExtension",
+          "validateExtension",
+          "normalizeSceneDocument",
+          "normalizeARControl",
+          "planComposer",
+          "sceneGraphPlanner",
+          "arPlanner"
+        ],
+        "note": "Kamishibaiの scene3d/ar 断片は個別に正規化され、TurboWarp向け call plan に合成される。"
+      },
+      {
+        "id": "contracts",
+        "label": "Contracts",
+        "focus": [
+          "sceneDocumentSchema",
+          "sceneNodeSchema",
+          "extensionSchema",
+          "sceneYamlTests",
+          "schemaContractTests",
+          "sb3WorkflowTests"
+        ],
+        "note": "JSON Schema と Vitest が入力形状、値型、リリースワークフローを固定する。"
+      },
+      {
+        "id": "release",
+        "label": "SB3 release",
+        "focus": [
+          "appSource",
+          "runtimeExtension",
+          "stageBackdrop",
+          "sb3Builder",
+          "releaseWorkflow",
+          "sb3Toolchain",
+          "releaseMetadata",
+          "candidateArtifact"
+        ],
+        "note": "配布用SB3は生成元ファイルから決定的に作られ、metadata と candidate artifact で検証される。"
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "consumer",
+      "type": "external",
+      "label": "利用側",
+      "sublabel": "tm-kamishibai / app code",
+      "pos": [
+        25,
+        325
+      ],
+      "size": [
+        140,
+        54
+      ],
+      "sources": [
+        {
+          "path": "README.md",
+          "label": "Responsibilities"
+        }
+      ]
+    },
+    {
+      "id": "packageExport",
+      "type": "cloud",
+      "label": "package export",
+      "sublabel": "dist/index.js + .d.ts",
+      "pos": [
+        210,
+        325
+      ],
+      "size": [
+        145,
+        54
+      ],
+      "sources": [
+        {
+          "path": "package.json",
+          "label": "exports"
+        }
+      ]
+    },
+    {
+      "id": "parseSceneYaml",
+      "type": "backend",
+      "label": "parseSceneYaml",
+      "sublabel": "YAML -> normalized scene",
+      "pos": [
+        395,
+        125
+      ],
+      "size": [
+        155,
+        54
+      ],
+      "sources": [
+        {
+          "path": "src/index.ts",
+          "label": "parse"
+        }
+      ]
+    },
+    {
+      "id": "stringifySceneYaml",
+      "type": "backend",
+      "label": "stringifySceneYaml",
+      "sublabel": "normalized scene -> YAML",
+      "pos": [
+        395,
+        205
+      ],
+      "size": [
+        155,
+        54
+      ],
+      "sources": [
+        {
+          "path": "src/index.ts",
+          "label": "stringify"
+        }
+      ]
+    },
+    {
+      "id": "yamlLibrary",
+      "type": "external",
+      "label": "yaml",
+      "sublabel": "parse / stringify",
+      "tag": "npm dependency",
+      "pos": [
+        395,
+        40
+      ],
+      "size": [
+        145,
+        52
+      ],
+      "sources": [
+        {
+          "path": "package.json",
+          "label": "yaml"
+        }
+      ]
+    },
+    {
+      "id": "validateSceneDocument",
+      "type": "security",
+      "label": "validateSceneDocument",
+      "sublabel": "scene graph validation",
+      "pos": [
+        590,
+        115
+      ],
+      "size": [
+        165,
+        54
+      ],
+      "sources": [
+        {
+          "path": "src/index.ts",
+          "label": "validateSceneDocument"
+        }
+      ]
+    },
+    {
+      "id": "validateSceneNode",
+      "type": "security",
+      "label": "validateSceneNodeTemplate",
+      "sublabel": "node-level guard",
+      "pos": [
+        590,
+        205
+      ],
+      "size": [
+        165,
+        54
+      ],
+      "sources": [
+        {
+          "path": "src/index.ts",
+          "label": "validateSceneNodeTemplate"
+        }
+      ]
+    },
+    {
+      "id": "validateExtension",
+      "type": "security",
+      "label": "validateExtension",
+      "sublabel": "scene3d/ar allowlist",
+      "pos": [
+        590,
+        325
+      ],
+      "size": [
+        170,
+        54
+      ],
+      "sources": [
+        {
+          "path": "src/index.ts",
+          "label": "validate extension"
+        }
+      ]
+    },
+    {
+      "id": "normalizeSceneDocument",
+      "type": "backend",
+      "label": "normalizeSceneDocument",
+      "sublabel": "defaults + deterministic ids",
+      "pos": [
+        785,
+        115
+      ],
+      "size": [
+        175,
+        54
+      ],
+      "sources": [
+        {
+          "path": "src/index.ts",
+          "label": "normalize scene"
+        }
+      ]
+    },
+    {
+      "id": "stringifyValue",
+      "type": "backend",
+      "label": "stringifySceneGraphValue",
+      "sublabel": "values to strings",
+      "pos": [
+        785,
+        40
+      ],
+      "size": [
+        170,
+        54
+      ],
+      "sources": [
+        {
+          "path": "src/index.ts",
+          "label": "value export"
+        }
+      ]
+    },
+    {
+      "id": "normalizeExtension",
+      "type": "backend",
+      "label": "normalizeExtension",
+      "sublabel": "scene3d/ar orchestration",
+      "pos": [
+        785,
+        325
+      ],
+      "size": [
+        185,
+        54
+      ],
+      "sources": [
+        {
+          "path": "src/index.ts",
+          "label": "normalize extension"
+        }
+      ]
+    },
+    {
+      "id": "normalizeARControl",
+      "type": "backend",
+      "label": "normalizeARSceneControl",
+      "sublabel": "camera/layer defaults",
+      "tag": "external fn",
+      "pos": [
+        785,
+        415
+      ],
+      "size": [
+        175,
+        54
+      ],
+      "sources": [
+        {
+          "path": "src/index.ts",
+          "label": "AR normalize import"
+        }
+      ]
+    },
+    {
+      "id": "planComposer",
+      "type": "backend",
+      "label": "Plan Composer",
+      "sublabel": "TurboWarp call plan",
+      "pos": [
+        1000,
+        325
+      ],
+      "size": [
+        175,
+        54
+      ],
+      "sources": [
+        {
+          "path": "src/index.ts",
+          "label": "plan composer"
+        }
+      ]
+    },
+    {
+      "id": "errorRemapper",
+      "type": "security",
+      "label": "error remappers",
+      "sublabel": "SceneGraph/AR -> tm-3d-app terms",
+      "pos": [
+        785,
+        235
+      ],
+      "size": [
+        175,
+        54
+      ],
+      "sources": [
+        {
+          "path": "src/index.ts",
+          "label": "remap*Error"
+        }
+      ]
+    },
+    {
+      "id": "sceneGraphPlanner",
+      "type": "external",
+      "label": "Scene Graph Plan",
+      "sublabel": "turbowarp-scene-graph-plan",
+      "tag": "trust boundary",
+      "pos": [
+        1110,
+        115
+      ],
+      "size": [
+        180,
+        54
+      ],
+      "sources": [
+        {
+          "path": "package.json",
+          "label": "dependency"
+        }
+      ]
+    },
+    {
+      "id": "arPlanner",
+      "type": "external",
+      "label": "AR Plan",
+      "sublabel": "turbowarp-ar/plan",
+      "tag": "trust boundary",
+      "pos": [
+        1110,
+        415
+      ],
+      "size": [
+        180,
+        54
+      ],
+      "sources": [
+        {
+          "path": "package.json",
+          "label": "dependency"
+        }
+      ]
+    },
+    {
+      "id": "sceneDocumentSchema",
+      "type": "database",
+      "label": "scene-document schema",
+      "sublabel": "formatVersion/options/root",
+      "pos": [
+        25,
+        485
+      ],
+      "size": [
+        160,
+        52
+      ],
+      "sources": [
+        {
+          "path": "schemas/scene-document.schema.json"
+        }
+      ]
+    },
+    {
+      "id": "sceneNodeSchema",
+      "type": "database",
+      "label": "scene-node schema",
+      "sublabel": "type/id/class/data/children",
+      "pos": [
+        210,
+        485
+      ],
+      "size": [
+        160,
+        52
+      ],
+      "sources": [
+        {
+          "path": "schemas/scene-node.schema.json"
+        }
+      ]
+    },
+    {
+      "id": "extensionSchema",
+      "type": "database",
+      "label": "extension schema",
+      "sublabel": "scene3d + ar target binding",
+      "pos": [
+        395,
+        485
+      ],
+      "size": [
+        160,
+        52
+      ],
+      "sources": [
+        {
+          "path": "schemas/kamishibai-3d-scene-extension.schema.json"
+        }
+      ]
+    },
+    {
+      "id": "sceneYamlTests",
+      "type": "backend",
+      "label": "scene-yaml tests",
+      "sublabel": "defaults, ids, plan calls",
+      "pos": [
+        590,
+        485
+      ],
+      "size": [
+        160,
+        52
+      ],
+      "sources": [
+        {
+          "path": "tests/scene-yaml.test.ts"
+        }
+      ]
+    },
+    {
+      "id": "schemaContractTests",
+      "type": "backend",
+      "label": "schema-contract tests",
+      "sublabel": "SceneGraphValue contract",
+      "pos": [
+        775,
+        485
+      ],
+      "size": [
+        160,
+        52
+      ],
+      "sources": [
+        {
+          "path": "tests/schema-contract.test.ts"
+        }
+      ]
+    },
+    {
+      "id": "sb3WorkflowTests",
+      "type": "backend",
+      "label": "SB3 workflow tests",
+      "sublabel": "determinism + stale source",
+      "pos": [
+        960,
+        485
+      ],
+      "size": [
+        160,
+        52
+      ],
+      "sources": [
+        {
+          "path": "tests/sb3-release-workflow.test.ts"
+        }
+      ]
+    },
+    {
+      "id": "appSource",
+      "type": "backend",
+      "label": "SB3 app source",
+      "sublabel": "release source files",
+      "pos": [
+        25,
+        575
+      ],
+      "size": [
+        155,
+        52
+      ],
+      "sources": [
+        {
+          "path": "scripts/sb3/app-source.mjs"
+        }
+      ]
+    },
+    {
+      "id": "runtimeExtension",
+      "type": "backend",
+      "label": "runtime extension stub",
+      "sublabel": "kubohiroyatm3dapp",
+      "pos": [
+        210,
+        575
+      ],
+      "size": [
+        165,
+        52
+      ],
+      "sources": [
+        {
+          "path": "scripts/sb3/app-source.mjs",
+          "label": "runtimeExtensionSource"
+        }
+      ]
+    },
+    {
+      "id": "stageBackdrop",
+      "type": "frontend",
+      "label": "stage backdrop",
+      "sublabel": "title SVG asset",
+      "pos": [
+        395,
+        575
+      ],
+      "size": [
+        150,
+        52
+      ],
+      "sources": [
+        {
+          "path": "scripts/sb3/app-source.mjs",
+          "label": "stageBackdropSvg"
+        }
+      ]
+    },
+    {
+      "id": "sb3Builder",
+      "type": "backend",
+      "label": "SB3 builder",
+      "sublabel": "temp source dir -> archive",
+      "pos": [
+        590,
+        575
+      ],
+      "size": [
+        160,
+        52
+      ],
+      "sources": [
+        {
+          "path": "scripts/sb3/build.mjs"
+        }
+      ]
+    },
+    {
+      "id": "releaseWorkflow",
+      "type": "cloud",
+      "label": "release workflow",
+      "sublabel": "update/check candidate",
+      "pos": [
+        775,
+        575
+      ],
+      "size": [
+        155,
+        52
+      ],
+      "sources": [
+        {
+          "path": "scripts/sb3/release-workflow.mjs"
+        }
+      ]
+    },
+    {
+      "id": "releaseMetadata",
+      "type": "database",
+      "label": "release metadata",
+      "sublabel": "release-metadata/*.json",
+      "pos": [
+        960,
+        575
+      ],
+      "size": [
+        150,
+        52
+      ],
+      "sources": [
+        {
+          "path": "scripts/sb3/release-workflow.mjs",
+          "label": "metadata path"
+        }
+      ]
+    },
+    {
+      "id": "candidateArtifact",
+      "type": "database",
+      "label": "candidate artifact",
+      "sublabel": "candidate .sb3",
+      "pos": [
+        1135,
+        575
+      ],
+      "size": [
+        145,
+        52
+      ],
+      "sources": [
+        {
+          "path": "scripts/sb3/release-workflow.mjs",
+          "label": "artifact path"
+        }
+      ]
+    },
+    {
+      "id": "sb3Toolchain",
+      "type": "external",
+      "label": "SB3 toolchain",
+      "sublabel": "sb3-toolchain",
+      "tag": "dev dependency",
+      "pos": [
+        1128,
+        485
+      ],
+      "size": [
+        155,
+        52
+      ],
+      "sources": [
+        {
+          "path": "package.json",
+          "label": "devDependency"
+        }
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "security-group",
+      "label": "公開API境界: src/index.ts",
+      "wraps": [
+        "packageExport",
+        "parseSceneYaml",
+        "stringifySceneYaml",
+        "validateSceneDocument",
+        "validateSceneNode",
+        "validateExtension",
+        "normalizeSceneDocument",
+        "stringifyValue",
+        "normalizeExtension",
+        "normalizeARControl",
+        "planComposer",
+        "errorRemapper"
+      ],
+      "pad": 10
+    },
+    {
+      "kind": "security-group",
+      "label": "不信頼入力境界: YAML / scene3d / ar",
+      "wraps": [
+        "parseSceneYaml",
+        "validateSceneDocument",
+        "validateSceneNode",
+        "validateExtension"
+      ],
+      "pad": 20
+    },
+    {
+      "kind": "security-group",
+      "label": "YAML parser依存境界",
+      "wraps": [
+        "yamlLibrary"
+      ],
+      "pad": 12
+    },
+    {
+      "kind": "security-group",
+      "label": "外部plan/SB3依存境界",
+      "wraps": [
+        "sceneGraphPlanner",
+        "arPlanner",
+        "sb3Toolchain"
+      ],
+      "pad": 16
+    },
+    {
+      "kind": "region",
+      "label": "契約検証: schemas + Vitest",
+      "wraps": [
+        "sceneDocumentSchema",
+        "sceneNodeSchema",
+        "extensionSchema",
+        "sceneYamlTests",
+        "schemaContractTests",
+        "sb3WorkflowTests"
+      ],
+      "pad": 24
+    },
+    {
+      "kind": "region",
+      "label": "SB3配布経路: generated source -> deterministic archive -> candidate",
+      "wraps": [
+        "appSource",
+        "runtimeExtension",
+        "stageBackdrop",
+        "sb3Builder",
+        "releaseWorkflow",
+        "releaseMetadata",
+        "candidateArtifact"
+      ],
+      "pad": 22
+    }
+  ],
+  "connections": [
+    {
+      "id": "consumer-imports",
+      "from": "consumer",
+      "to": "packageExport",
+      "variant": "emphasis"
+    },
+    {
+      "id": "yaml-to-parse",
+      "from": "yamlLibrary",
+      "to": "parseSceneYaml",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "parse-validates",
+      "from": "parseSceneYaml",
+      "to": "validateSceneDocument",
+      "variant": "security"
+    },
+    {
+      "id": "stringify-validates",
+      "from": "stringifySceneYaml",
+      "to": "validateSceneDocument",
+      "variant": "security"
+    },
+    {
+      "id": "node-guard",
+      "from": "validateSceneDocument",
+      "to": "validateSceneNode",
+      "variant": "security"
+    },
+    {
+      "id": "scene-normalize",
+      "from": "validateSceneDocument",
+      "to": "normalizeSceneDocument"
+    },
+    {
+      "id": "extension-guard",
+      "from": "packageExport",
+      "to": "validateExtension",
+      "variant": "security"
+    },
+    {
+      "id": "extension-normalize",
+      "from": "validateExtension",
+      "to": "normalizeExtension"
+    },
+    {
+      "id": "extension-ar",
+      "from": "normalizeExtension",
+      "to": "normalizeARControl",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "normalize-plan",
+      "from": "normalizeExtension",
+      "to": "planComposer",
+      "variant": "emphasis"
+    },
+    {
+      "id": "plan-scene",
+      "from": "planComposer",
+      "to": "sceneGraphPlanner",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "plan-ar",
+      "from": "planComposer",
+      "to": "arPlanner",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "scene-errors",
+      "from": "sceneGraphPlanner",
+      "to": "errorRemapper",
+      "variant": "dashed"
+    },
+    {
+      "id": "ar-errors",
+      "from": "arPlanner",
+      "to": "errorRemapper",
+      "variant": "dashed"
+    },
+    {
+      "id": "value-to-scene",
+      "from": "stringifyValue",
+      "to": "sceneGraphPlanner",
+      "variant": "dashed"
+    },
+    {
+      "id": "doc-node-schema",
+      "from": "sceneDocumentSchema",
+      "to": "sceneNodeSchema"
+    },
+    {
+      "id": "node-extension-schema",
+      "from": "sceneNodeSchema",
+      "to": "extensionSchema"
+    },
+    {
+      "id": "schemas-tests",
+      "from": "extensionSchema",
+      "to": "sceneYamlTests",
+      "variant": "dashed"
+    },
+    {
+      "id": "yaml-tests-schema-tests",
+      "from": "sceneYamlTests",
+      "to": "schemaContractTests",
+      "variant": "dashed"
+    },
+    {
+      "id": "schema-tests-sb3-tests",
+      "from": "schemaContractTests",
+      "to": "sb3WorkflowTests",
+      "variant": "dashed"
+    },
+    {
+      "id": "app-source-runtime",
+      "from": "appSource",
+      "to": "runtimeExtension"
+    },
+    {
+      "id": "source-to-builder",
+      "from": "stageBackdrop",
+      "to": "sb3Builder"
+    },
+    {
+      "id": "builder-toolchain",
+      "from": "sb3Builder",
+      "to": "sb3Toolchain",
+      "variant": "dashed",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "builder-release",
+      "from": "sb3Builder",
+      "to": "releaseWorkflow"
+    },
+    {
+      "id": "release-toolchain",
+      "from": "releaseWorkflow",
+      "to": "sb3Toolchain",
+      "variant": "dashed",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "release-metadata",
+      "from": "releaseWorkflow",
+      "to": "releaseMetadata"
+    },
+    {
+      "id": "release-artifact",
+      "from": "releaseMetadata",
+      "to": "candidateArtifact"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "API処理経路と主要部品",
+      "items": [
+        "公開入口は `package.json` の `exports[\".\"]`。`src/index.ts` が YAML API、extension API、型再公開、エラー文言 remap をまとめる。",
+        "YAML経路は `yaml` dependency の parse/stringify を境界に、scene document/node の検証と defaults/deterministic ids の正規化を通す。",
+        "Kamishibai拡張経路は `scene3d` と `ar` だけを許可し、Scene Graph Plan と AR Plan へ分配して TurboWarp向け call plan を作る。"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "契約、信頼境界、SB3配布",
+      "items": [
+        "`schemas/` は scene document、scene node、Kamishibai 3D extension の入力形状を定義し、`tests/` が defaults、ID生成、値文字列化、schema contract、stale source 検出を固定する。",
+        "YAML文字列、`scene3d`、`ar`、外部 plan ライブラリ、SB3 toolchain が主な信頼境界。外部由来の例外は `tm-3d-app` 用語へ remap される。",
+        "`scripts/sb3/*` は runtime extension stub、stage backdrop、deterministic SB3 archive、release metadata、candidate artifact を扱う。"
+      ]
+    }
+  ]
+}
