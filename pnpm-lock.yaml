@@ -14,7 +14,7 @@ importers:
       '@kubohiroya/turbowarp-sb3-source-builder':
         specifier: 0.1.0
         version: 0.1.0
-      '@kubohiroya/turbowarp-scene-graph-plan':
+      '@kubohiroya/turbowarp-scene-graph':
         specifier: 0.1.0
         version: 0.1.0
       yaml:
@@ -55,8 +55,8 @@ packages:
     resolution: {integrity: sha512-sH9bAd58Rsgg1WIaLMB3x5FBs+2XyIJnzi3zybMZYBsD5PZuaZ3k3Uwv1oFI5hCnOeFMaXOUKra82Nl+ABKB2w==}
     engines: {node: '>=22'}
 
-  '@kubohiroya/turbowarp-scene-graph-plan@0.1.0':
-    resolution: {integrity: sha512-KvmRHfrXu4VsqK77E8wENZJJEd7kiZqjjcykZp2YZP31ownHoykz1nBYajfjIsAJoCp3DfgsUzII6pEQetKouw==}
+  '@kubohiroya/turbowarp-scene-graph@0.1.0':
+    resolution: {integrity: sha512-tsELncNwr7q6XEPlyygKz1xv8Kvr2tpLerIXS1zuy9vPL+Ip66FWskz96l7QNPSf6JmiO+1Y+p5mWdDZ+bA//A==}
     engines: {node: '>=22'}
 
   '@oxc-project/types@0.146.0':
@@ -553,7 +553,7 @@ snapshots:
 
   '@kubohiroya/turbowarp-sb3-source-builder@0.1.0': {}
 
-  '@kubohiroya/turbowarp-scene-graph-plan@0.1.0': {}
+  '@kubohiroya/turbowarp-scene-graph@0.1.0': {}
 
   '@oxc-project/types@0.146.0': {}
 

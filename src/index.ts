@@ -11,7 +11,7 @@ import {
   type SceneGraphOptions,
   type SceneGraphScalar,
   type SceneGraphValue
-} from '@kubohiroya/turbowarp-scene-graph-plan';
+} from '@kubohiroya/turbowarp-scene-graph';
 import {
   createTurboWarpARScenePlan,
   normalizeARSceneControl,
