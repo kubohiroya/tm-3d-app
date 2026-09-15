@@ -4,7 +4,7 @@
   "meta": {
     "title": "tm-3d-app 詳細アーキテクチャ",
     "output": "tm-3d-app-architecture.html",
-    "quality_profile": "standard",
+    "quality_profile": "showcase",
     "repository": {
       "url": "https://github.com/kubohiroya/tm-3d-app",
       "revision": "7427194c8b9a9981b7b9e85d253299f4a0064948"
@@ -121,7 +121,7 @@
       "sublabel": "YAML -> normalized scene",
       "pos": [
         395,
-        125
+        119
       ],
       "size": [
         155,
@@ -303,7 +303,7 @@
       "tag": "external fn",
       "pos": [
         785,
-        415
+        410
       ],
       "size": [
         175,
@@ -360,7 +360,7 @@
       "id": "sceneGraphPlanner",
       "type": "external",
       "label": "Scene Graph Plan",
-      "sublabel": "turbowarp-scene-graph-plan",
+      "sublabel": "turbowarp-scene-graph",
       "tag": "trust boundary",
       "pos": [
         1110,
@@ -834,7 +834,15 @@
       "id": "ar-errors",
       "from": "arPlanner",
       "to": "errorRemapper",
-      "variant": "dashed"
+      "variant": "dashed",
+      "fromSide": "right",
+      "toSide": "left",
+      "via": [
+        [1310, 442],
+        [1310, 20],
+        [380, 20],
+        [380, 262]
+      ]
     },
     {
       "id": "value-to-scene",

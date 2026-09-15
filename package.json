@@ -55,7 +55,7 @@
   "dependencies": {
     "@kubohiroya/turbowarp-ar": "0.1.0",
     "@kubohiroya/turbowarp-sb3-source-builder": "0.1.0",
-    "@kubohiroya/turbowarp-scene-graph-plan": "0.1.0",
+    "@kubohiroya/turbowarp-scene-graph": "0.1.0",
     "yaml": "^2.9.0"
   },
   "devDependencies": {
