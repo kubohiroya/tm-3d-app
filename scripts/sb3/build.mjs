@@ -9,7 +9,7 @@ import {buildSb3, createDeterministicSb3} from '@kubohiroya/sb3-toolchain';
 import {createTm3dAppReleaseSourceFiles} from './app-source.mjs';
 
 const repositoryRoot = fileURLToPath(new URL('../../', import.meta.url));
-export const defaultTm3dAppOutputPath = path.join(repositoryRoot, 'tmp', 'tm-3d-app.sb3');
+export const defaultTm3dAppOutputPath = path.join(repositoryRoot, 'tmp', 'turbowarp-3d-scene-dsl.sb3');
 
 async function writeSourceFiles(directory, files) {
   for (const [relativePath, contents] of [...files.entries()].sort(([left], [right]) =>
@@ -22,7 +22,7 @@ async function writeSourceFiles(directory, files) {
 }
 
 export async function withTm3dAppSourceDirectory(callback, {createSourceFiles} = {}) {
-  const temporaryRoot = await mkdtemp(path.join(os.tmpdir(), 'tm-3d-app-source-'));
+  const temporaryRoot = await mkdtemp(path.join(os.tmpdir(), 'turbowarp-3d-scene-dsl-source-'));
   const sourceDirectory = path.join(temporaryRoot, 'app');
   try {
     await writeSourceFiles(sourceDirectory, await (createSourceFiles ?? createTm3dAppReleaseSourceFiles)());

@@ -1,16 +1,16 @@
 {
-  "name": "@kubohiroya/tm-3d-app",
+  "name": "@kubohiroya/turbowarp-3d-scene-dsl",
   "version": "0.1.0",
-  "description": "App-level 3D scene document utilities for tm packages.",
+  "description": "3D/AR scene DSL validation, normalization, and TurboWarp extension call-plan utilities.",
   "author": "Hiroya Kubo <hiroya@cuc.ac.jp>",
   "license": "MPL-2.0",
-  "homepage": "https://github.com/kubohiroya/tm-3d-app#readme",
+  "homepage": "https://github.com/kubohiroya/turbowarp-3d-scene-dsl#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kubohiroya/tm-3d-app.git"
+    "url": "git+https://github.com/kubohiroya/turbowarp-3d-scene-dsl.git"
   },
   "bugs": {
-    "url": "https://github.com/kubohiroya/tm-3d-app/issues"
+    "url": "https://github.com/kubohiroya/turbowarp-3d-scene-dsl/issues"
   },
   "keywords": [
     "3d",

@@ -1,10 +1,14 @@
-# tm-3d-app
+# turbowarp-3d-scene-dsl
 
 [日本語](README.ja.md)
 
-`tm-3d-app` is a TypeScript package for handling 3D/AR DSL fragments attached to Kamishibai scenes.
+`turbowarp-3d-scene-dsl` is a TypeScript package for handling 3D/AR DSL fragments attached to Kamishibai scenes.
 
 The current implementation validates, normalizes, and serializes YAML-based 3D scene documents, and turns `scene3d` / `ar` fragments into low-level TurboWarp extension call plans. It does not include the actual A-Frame or AR runtime implementation.
+
+## Identity Migration
+
+The package/repository rename changes the distributed SB3 extension ID from `kubohiroyatm3dapp` to `kubohiroya3dscenedsl` and moves schema `$id` URLs to the renamed repository. This is a breaking change: existing SB3 files must be expanded and migrated structurally, with manifests and integrity regenerated. The `statusReporter` opcode, DSL input shapes, and public TypeScript API names are unchanged.
 
 ## Responsibilities
 
@@ -34,7 +38,7 @@ import {
   validateKamishibai3DSceneExtension,
   validateSceneDocument,
   validateSceneNodeTemplate
-} from '@kubohiroya/tm-3d-app';
+} from '@kubohiroya/turbowarp-3d-scene-dsl';
 ```
 
 Main types:
@@ -64,7 +68,7 @@ root:
 `parseSceneYaml` validates and normalizes YAML input.
 
 ```ts
-import {parseSceneYaml, stringifySceneYaml} from '@kubohiroya/tm-3d-app';
+import {parseSceneYaml, stringifySceneYaml} from '@kubohiroya/turbowarp-3d-scene-dsl';
 
 const scene = parseSceneYaml(`
 formatVersion: 1
@@ -104,7 +108,7 @@ Main normalization rules:
 `scene3d` and `ar` can be passed together in the same extension object.
 
 ```ts
-import {createTurboWarpExtensionPlan} from '@kubohiroya/tm-3d-app';
+import {createTurboWarpExtensionPlan} from '@kubohiroya/turbowarp-3d-scene-dsl';
 
 const calls = createTurboWarpExtensionPlan({
   scene3d: {

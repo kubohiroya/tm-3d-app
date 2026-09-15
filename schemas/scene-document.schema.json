@@ -1,20 +1,33 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/kubohiroya/tm-3d-app/main/schemas/scene-document.schema.json",
-  "title": "tm-3d-app Scene Document",
+  "$id": "https://raw.githubusercontent.com/kubohiroya/turbowarp-3d-scene-dsl/main/schemas/scene-document.schema.json",
+  "title": "TurboWarp 3D Scene DSL Document",
   "type": "object",
   "additionalProperties": false,
-  "required": ["formatVersion", "root"],
+  "required": [
+    "formatVersion",
+    "root"
+  ],
   "properties": {
-    "formatVersion": {"const": 1},
+    "formatVersion": {
+      "const": 1
+    },
     "options": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "layer": {"type": "string", "minLength": 1},
-        "mode": {"type": "string", "minLength": 1}
+        "layer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mode": {
+          "type": "string",
+          "minLength": 1
+        }
       }
     },
-    "root": {"$ref": "scene-node.schema.json"}
+    "root": {
+      "$ref": "scene-node.schema.json"
+    }
   }
 }
