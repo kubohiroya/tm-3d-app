@@ -1,0 +1,19 @@
+{
+  "formatVersion": 1,
+  "series": "0.1",
+  "version": "0.1.0",
+  "channel": "next",
+  "buildDate": "2026-08-27",
+  "state": "candidate",
+  "sourceIdentity": "sha256:d76e466c5269ef51f76d1fdc510f401f84738f0f5c493de8157aae09e9ebc9b5",
+  "artifact": {
+    "filename": "turbowarp-3d-scene-dsl-0.1.0.sb3",
+    "sha256": "499db870802c75ae78e6e4cef4f5bb90edece59c50da592bf09a55586179eff6",
+    "size": 1323
+  },
+  "publication": {
+    "npm": {
+      "distTag": "next"
+    }
+  }
+}

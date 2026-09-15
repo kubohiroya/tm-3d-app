@@ -1,10 +1,14 @@
-# tm-3d-app
+# turbowarp-3d-scene-dsl
 
 [English](README.md)
 
-`tm-3d-app` は、Kamishibai の scene に付与する 3D/AR 用 DSL 断片を扱う TypeScript パッケージです。
+`turbowarp-3d-scene-dsl` は、Kamishibai の scene に付与する 3D/AR 用 DSL 断片を扱う TypeScript パッケージです。
 
 現在の実装は、YAML で書かれた 3D scene document の検証・正規化・シリアライズと、`scene3d` / `ar` 断片から低レベル TurboWarp 拡張呼び出し計画を作るところまでを担当します。実際の A-Frame / AR 実行処理はこのパッケージには含みません。
+
+## 識別子の移行
+
+package／repositoryの改名に伴い、配布SB3のextension IDは`kubohiroyatm3dapp`から`kubohiroya3dscenedsl`へ変更されます。schema `$id`も新repositoryのURLへ移行します。これはbreaking changeであり、既存SB3は展開したJSON構造を移行してmanifestとintegrityを再生成する必要があります。opcode `statusReporter`、DSLの入力形状、TypeScript公開API名は維持します。
 
 ## 役割
 
@@ -34,7 +38,7 @@ import {
   validateKamishibai3DSceneExtension,
   validateSceneDocument,
   validateSceneNodeTemplate
-} from '@kubohiroya/tm-3d-app';
+} from '@kubohiroya/turbowarp-3d-scene-dsl';
 ```
 
 主な型:
@@ -64,7 +68,7 @@ root:
 `parseSceneYaml` は YAML を検証した上で正規化します。
 
 ```ts
-import {parseSceneYaml, stringifySceneYaml} from '@kubohiroya/tm-3d-app';
+import {parseSceneYaml, stringifySceneYaml} from '@kubohiroya/turbowarp-3d-scene-dsl';
 
 const scene = parseSceneYaml(`
 formatVersion: 1
@@ -104,7 +108,7 @@ console.log(stringifySceneYaml(scene));
 `scene3d` と `ar` は同じ extension object にまとめて渡せます。
 
 ```ts
-import {createTurboWarpExtensionPlan} from '@kubohiroya/tm-3d-app';
+import {createTurboWarpExtensionPlan} from '@kubohiroya/turbowarp-3d-scene-dsl';
 
 const calls = createTurboWarpExtensionPlan({
   scene3d: {

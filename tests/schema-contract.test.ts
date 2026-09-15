@@ -7,6 +7,17 @@ async function readJson(path: string): Promise<Record<string, unknown>> {
 }
 
 describe('JSON Schema contracts', () => {
+  it.each([
+    'kamishibai-3d-scene-extension.schema.json',
+    'scene-document.schema.json',
+    'scene-node.schema.json'
+  ])('uses the renamed repository identity in %s', async (filename) => {
+    const schema = await readJson(`schemas/${filename}`);
+    expect(schema['$id']).toBe(
+      `https://raw.githubusercontent.com/kubohiroya/turbowarp-3d-scene-dsl/main/schemas/${filename}`
+    );
+  });
+
   it('allows typed scene graph values in node data and attributes', async () => {
     const schema = await readJson('schemas/scene-node.schema.json');
     const defs = schema['$defs'] as Record<string, unknown>;

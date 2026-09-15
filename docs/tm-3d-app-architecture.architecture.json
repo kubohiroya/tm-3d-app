@@ -2,11 +2,11 @@
   "schema_version": 1,
   "diagram_type": "architecture",
   "meta": {
-    "title": "tm-3d-app 詳細アーキテクチャ",
+    "title": "turbowarp-3d-scene-dsl 構成",
     "output": "tm-3d-app-architecture.html",
     "quality_profile": "showcase",
     "repository": {
-      "url": "https://github.com/kubohiroya/tm-3d-app",
+      "url": "https://github.com/kubohiroya/turbowarp-3d-scene-dsl",
       "revision": "7427194c8b9a9981b7b9e85d253299f4a0064948"
     },
     "viewBox": [
@@ -340,7 +340,7 @@
       "id": "errorRemapper",
       "type": "security",
       "label": "error remappers",
-      "sublabel": "SceneGraph/AR -> tm-3d-app terms",
+      "sublabel": "SceneGraph/AR -> DSL terms",
       "pos": [
         785,
         235
@@ -535,7 +535,7 @@
       "id": "runtimeExtension",
       "type": "backend",
       "label": "runtime extension stub",
-      "sublabel": "kubohiroyatm3dapp",
+      "sublabel": "kubohiroya3dscenedsl",
       "pos": [
         210,
         575
@@ -838,10 +838,22 @@
       "fromSide": "right",
       "toSide": "left",
       "via": [
-        [1310, 442],
-        [1310, 20],
-        [380, 20],
-        [380, 262]
+        [
+          1310,
+          442
+        ],
+        [
+          1310,
+          20
+        ],
+        [
+          380,
+          20
+        ],
+        [
+          380,
+          262
+        ]
       ]
     },
     {
@@ -935,7 +947,7 @@
       "title": "契約、信頼境界、SB3配布",
       "items": [
         "`schemas/` は scene document、scene node、Kamishibai 3D extension の入力形状を定義し、`tests/` が defaults、ID生成、値文字列化、schema contract、stale source 検出を固定する。",
-        "YAML文字列、`scene3d`、`ar`、外部 plan ライブラリ、SB3 toolchain が主な信頼境界。外部由来の例外は `tm-3d-app` 用語へ remap される。",
+        "YAML文字列、`scene3d`、`ar`、外部 plan ライブラリ、SB3 toolchain が主な信頼境界。外部由来の例外は本DSLの用語へ remap される。",
         "`scripts/sb3/*` は runtime extension stub、stage backdrop、deterministic SB3 archive、release metadata、candidate artifact を扱う。"
       ]
     }

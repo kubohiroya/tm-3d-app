@@ -18,7 +18,7 @@ export const tm3dAppReleaseVersion = '0.1.0';
 export const tm3dAppReleaseSeries = '0.1';
 export const tm3dAppReleaseBuildDate = '2026-08-27';
 export const tm3dAppReleaseChannel = 'next';
-export const tm3dAppReleaseFilename = `tm-3d-app-${tm3dAppReleaseVersion}.sb3`;
+export const tm3dAppReleaseFilename = `turbowarp-3d-scene-dsl-${tm3dAppReleaseVersion}.sb3`;
 export const tm3dAppReleaseMetadataPath = `release-metadata/${tm3dAppReleaseVersion}.json`;
 export const tm3dAppReleaseCandidateArtifactPath = `tmp/release-candidates/${tm3dAppReleaseFilename}`;
 

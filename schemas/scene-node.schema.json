@@ -1,59 +1,103 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/kubohiroya/tm-3d-app/main/schemas/scene-node.schema.json",
-  "title": "tm-3d-app Scene Node",
+  "$id": "https://raw.githubusercontent.com/kubohiroya/turbowarp-3d-scene-dsl/main/schemas/scene-node.schema.json",
+  "title": "TurboWarp 3D Scene DSL Node",
   "type": "object",
   "additionalProperties": false,
   "$defs": {
-    "sceneGraphScalar": {"type": ["string", "number", "boolean", "null"]},
+    "sceneGraphScalar": {
+      "type": [
+        "string",
+        "number",
+        "boolean",
+        "null"
+      ]
+    },
     "sceneGraphScalarArray": {
       "type": "array",
-      "items": {"$ref": "#/$defs/sceneGraphScalar"}
+      "items": {
+        "$ref": "#/$defs/sceneGraphScalar"
+      }
     },
     "sceneGraphScalarObject": {
       "type": "object",
-      "propertyNames": {"type": "string", "minLength": 1},
-      "additionalProperties": {"$ref": "#/$defs/sceneGraphScalar"}
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/sceneGraphScalar"
+      }
     },
     "sceneGraphValue": {
       "oneOf": [
-        {"$ref": "#/$defs/sceneGraphScalar"},
-        {"$ref": "#/$defs/sceneGraphScalarArray"},
-        {"$ref": "#/$defs/sceneGraphScalarObject"}
+        {
+          "$ref": "#/$defs/sceneGraphScalar"
+        },
+        {
+          "$ref": "#/$defs/sceneGraphScalarArray"
+        },
+        {
+          "$ref": "#/$defs/sceneGraphScalarObject"
+        }
       ]
     }
   },
   "properties": {
-    "type": {"type": "string", "minLength": 1},
-    "id": {"type": "string", "minLength": 1},
+    "type": {
+      "type": "string",
+      "minLength": 1
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
     "class": {
       "oneOf": [
-        {"type": "string"},
+        {
+          "type": "string"
+        },
         {
           "type": "array",
-          "items": {"type": "string"},
+          "items": {
+            "type": "string"
+          },
           "uniqueItems": true
         }
       ]
     },
     "classes": {
       "type": "array",
-      "items": {"type": "string"},
+      "items": {
+        "type": "string"
+      },
       "uniqueItems": true
     },
     "data": {
       "type": "object",
-      "propertyNames": {"type": "string", "minLength": 1},
-      "additionalProperties": {"$ref": "#/$defs/sceneGraphValue"}
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/sceneGraphValue"
+      }
     },
     "attributes": {
       "type": "object",
-      "propertyNames": {"type": "string", "minLength": 1},
-      "additionalProperties": {"$ref": "#/$defs/sceneGraphValue"}
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/sceneGraphValue"
+      }
     },
     "children": {
       "type": "array",
-      "items": {"$ref": "#"}
+      "items": {
+        "$ref": "#"
+      }
     }
   }
 }

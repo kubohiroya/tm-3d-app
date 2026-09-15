@@ -1,31 +1,59 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/kubohiroya/tm-3d-app/main/schemas/kamishibai-3d-scene-extension.schema.json",
-  "title": "tm-3d-app Kamishibai 3D Scene Extension",
+  "$id": "https://raw.githubusercontent.com/kubohiroya/turbowarp-3d-scene-dsl/main/schemas/kamishibai-3d-scene-extension.schema.json",
+  "title": "TurboWarp 3D Scene DSL Kamishibai Extension",
   "type": "object",
   "additionalProperties": false,
   "properties": {
-    "scene3d": {"$ref": "scene-document.schema.json"},
+    "scene3d": {
+      "$ref": "scene-document.schema.json"
+    },
     "ar": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "cameraId": {"type": "string", "minLength": 1},
-        "layer": {"type": "string", "minLength": 1},
+        "cameraId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "layer": {
+          "type": "string",
+          "minLength": 1
+        },
         "targets": {
           "type": "array",
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["targetId", "selector"],
+            "required": [
+              "targetId",
+              "selector"
+            ],
             "properties": {
-              "targetId": {"type": "string", "minLength": 1},
-              "selector": {"type": "string", "minLength": 1}
+              "targetId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "selector": {
+                "type": "string",
+                "minLength": 1
+              }
             }
           }
         }
       }
     }
   },
-  "anyOf": [{"required": ["scene3d"]}, {"required": ["ar"]}]
+  "anyOf": [
+    {
+      "required": [
+        "scene3d"
+      ]
+    },
+    {
+      "required": [
+        "ar"
+      ]
+    }
+  ]
 }
