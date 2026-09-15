@@ -1,4 +1,4 @@
-import {createTurboWarpSb3AppSourceFiles} from '@kubohiroya/turbowarp-sb3-app-source';
+import {createTurboWarpSb3AppSourceFiles} from '@kubohiroya/turbowarp-sb3-source-builder';
 
 export const tm3dAppRuntimeExtensionId = 'kubohiroyatm3dapp';
 

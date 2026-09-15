@@ -11,7 +11,7 @@ importers:
       '@kubohiroya/turbowarp-ar':
         specifier: 0.1.0
         version: 0.1.0
-      '@kubohiroya/turbowarp-sb3-app-source':
+      '@kubohiroya/turbowarp-sb3-source-builder':
         specifier: 0.1.0
         version: 0.1.0
       '@kubohiroya/turbowarp-scene-graph-plan':
@@ -51,8 +51,8 @@ packages:
     resolution: {integrity: sha512-FQmmkvJpp77UtcbfOur31yNxVVdwA9nCmkcKZ9N4rNwGZgQHxmZTZfBqp2zOzA5xePwuvIn5fQpyxwZ1GZTQkw==}
     engines: {node: '>=22'}
 
-  '@kubohiroya/turbowarp-sb3-app-source@0.1.0':
-    resolution: {integrity: sha512-lV0WrdyxFpUPYvusxTcCRt/XXtgBPi28JdYfbLjkqCI/5W3yl+DcxnHNzMtvPCH/TW1l9iuRP4Li9KyQRIywcg==}
+  '@kubohiroya/turbowarp-sb3-source-builder@0.1.0':
+    resolution: {integrity: sha512-sH9bAd58Rsgg1WIaLMB3x5FBs+2XyIJnzi3zybMZYBsD5PZuaZ3k3Uwv1oFI5hCnOeFMaXOUKra82Nl+ABKB2w==}
     engines: {node: '>=22'}
 
   '@kubohiroya/turbowarp-scene-graph-plan@0.1.0':
@@ -551,7 +551,7 @@ snapshots:
 
   '@kubohiroya/turbowarp-ar@0.1.0': {}
 
-  '@kubohiroya/turbowarp-sb3-app-source@0.1.0': {}
+  '@kubohiroya/turbowarp-sb3-source-builder@0.1.0': {}
 
   '@kubohiroya/turbowarp-scene-graph-plan@0.1.0': {}
 
